@@ -13,9 +13,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Maxwidth from "./MaxWidth";
-import { Asterisk } from "lucide-react";
+import { AlertCircle, Asterisk, Terminal } from "lucide-react";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
 const api = process.env.NEXT_PUBLIC_API;
 const schema = z
@@ -44,7 +45,7 @@ const schema = z
   })
 type FormFields = z.infer<typeof schema>;
 
-const SignInForm = () => {
+const SignInForm = ({onSuccess}:any) => {
   const router = useRouter();
   const [visible, setVisible] = React.useState(false);
   const [formError , setFormError]  = React.useState<any>(null)
@@ -59,22 +60,43 @@ const SignInForm = () => {
   const onSubmit = async (values: z.infer<typeof schema>) => {
     try {
         console.log(values)
-        const postSignUp = await fetch(`${api}/signin`, {
+        const postSignIn = await fetch(`${api}/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(values)
         })
-        if(!postSignUp.ok){
-            setFormError("Can not POST in API, Please contact developer")
+        if(!postSignIn.ok){
+          const data = await postSignIn.json()
+            setFormError(data.message)
+            return;
         }
-        // router.push("/")
+        const data = await postSignIn.json()
+        const token = await data.token
+        sessionStorage.setItem("token",token)
+        onSuccess()
     } catch (error) {
         setFormError('Something went wrong. Please try again.');
         throw new Error("Something went wrong")
     }
   };
+
+  React.useEffect(()=>{
+    //! handler error and out
+    let timeOut: NodeJS.Timeout | null = null
+    if(formError){
+      timeOut = setTimeout(()=>{
+        setFormError(null)
+      }, 3000)
+    }
+    return ()=>{
+      if(timeOut){
+        clearTimeout(timeOut)
+      }
+    }
+   
+  },[formError])
 
   return (
     <Maxwidth>
@@ -141,9 +163,19 @@ const SignInForm = () => {
             )}
           />         
           <Button type="submit" className="bg-blue-700 w-full">
-            Sign Up
+            Sign In
           </Button>
-          {formError && <p className="text-red-500">{formError}</p>}
+          {formError && (<Alert variant="destructive">
+            <AlertCircle  size={16} />
+            <AlertTitle>
+              <h5>
+            บางสิ่งบางอย่างผิดพลาด !!
+              </h5>
+            </AlertTitle>
+            <AlertDescription>
+            <p>{formError}</p>
+            </AlertDescription>
+          </Alert>)}
         </form>
       </Form>
     </Maxwidth>

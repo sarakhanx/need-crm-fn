@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import MainSidebar from "@/components/Layout-Components/MainSidebar";
-
-const inter = Inter({ subsets: ["latin"] });
+import SearchComponent from "@/components/Search";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,10 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+      <div className="flex">
+      <MainSidebar/>
+        <main className="flex-grow">
           {children}
-      </body>
-    </html>
+        </main>
+      </div>
   );
 }
