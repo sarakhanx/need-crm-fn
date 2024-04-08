@@ -17,7 +17,7 @@ const MainSidebar = () => {
   
   return (
     <aside
-      className={`flex flex-col justify-between h-screen bg-gray-900/50 transition-all ease-in-out duration-500 transform ${
+      className={`flex flex-col justify-between h-100 bg-gray-900/50 transition-all ease-in-out duration-500 transform ${
         isOpen ? "w-48" : ""
       }`}
       ref={ref}
