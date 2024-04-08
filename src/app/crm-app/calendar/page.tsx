@@ -4,7 +4,6 @@ import useAuth from "@/lib/hooks/useAuth";
 
 export default function Page() {
     useAuth();
- 
   return (
     <Maxwidth>
       <div>

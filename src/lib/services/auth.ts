@@ -1,7 +1,15 @@
 import { jwtDecode } from "jwt-decode";
+// import { useUserSession } from "../hooks/authHooks/useUserSession";
 
 const isAuth = () => {
-    const token = sessionStorage.getItem("token");
+  // const { getUserSessionData } = useUserSession();
+  // const sessionData = getUserSessionData();
+  // const token = sessionDataa?.token;
+
+
+    const sessionData = sessionStorage.getItem("session");
+    const session = sessionData ? JSON.parse(sessionData) : null;
+    const token = session?.token;
     if (token) {
         try {
           const decoded = jwtDecode(token);
@@ -18,3 +26,6 @@ const isAuth = () => {
     return false;
   };
   export default isAuth
+
+
+  //auth แบบง่ายๆ 

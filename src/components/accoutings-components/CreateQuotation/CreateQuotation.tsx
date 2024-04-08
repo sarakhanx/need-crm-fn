@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -9,7 +8,7 @@ import {
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import Maxwidth from "../../MaxWidth";
-import { CompanySelect } from "./CompanySelect";
+import { DataSelect } from "./DataSelect";
 interface Errors {
     fieldErrors: {
       [field: string]: string[];
@@ -27,7 +26,7 @@ interface Errors {
                     <CardDescription className="text-sm">เพิ่มหัวบิลใหม่</CardDescription>
                 </CardHeader>
                 <CardContent>
-        <CompanySelect/>
+        <DataSelect/>
                 </CardContent>
             </Card>
         </Maxwidth>

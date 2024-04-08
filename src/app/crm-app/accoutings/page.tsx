@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -16,16 +15,17 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import CustomerRegister from "@/components/accoutings-components/CustomerRegister";
 import CreateQuotation from "@/components/accoutings-components/CreateQuotation/CreateQuotation";
+// import { useUserSession } from "@/lib/hooks/authHooks/useUserSession";
 
 export default function Page() {
+  // const {userSession} = useUserSession();
+  // const user = userSession?.token
+  // console.log("user token =", user);
   useAuth();
   return (
     <Maxwidth>

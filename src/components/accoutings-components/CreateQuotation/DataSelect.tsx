@@ -1,30 +1,14 @@
 import { Button } from "@/components/ui/button";
 import * as React from "react";
+import { useUserSession } from "@/lib/hooks/authHooks/useUserSession";
+import {Customer , Company} from "@/lib/types";
+import { useRouter } from "next/navigation";
 
 const api = process.env.NEXT_PUBLIC_API;
 
-type Company = {
-  id: number;
-  company_name: string;
-  company_address: string;
-  company_vat_id: string;
-  createdAt: string;
-  company_contact: string;
-};
+export function DataSelect() {
+  const router = useRouter();
 
-type Customer = {
-  id: number;
-  name: string;
-  lastname: string;
-  customer_email: string;
-  customer_address: string;
-  customer_mobile: string;
-  company_name: string;
-  company_contact: string;
-  company_vat: string;
-};
-
-export function CompanySelect() {
   const [companies, setCompanies] = React.useState<Company[]>([]);
   const [customers, setCustomers] = React.useState<Customer[]>([]);
   const [customerSelected, setCustomerSelected] =
@@ -32,6 +16,10 @@ export function CompanySelect() {
   const [companySelected, setCompanySelected] =
     React.useState<Company | null>();
   const [searchTerm, setSearchTerm] = React.useState("");
+
+  const {userSession} = useUserSession()
+  const userId = userSession?.id
+  console.log(userId)
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -56,7 +44,6 @@ export function CompanySelect() {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
 
@@ -67,27 +54,46 @@ export function CompanySelect() {
     );
     setCompanySelected(selectedCompany || null);
   };
-
-  const confirmCreateDocs = () => {
-    const company = companySelected?.id;
-    const customer = customerSelected?.id;
-    console.log(company);
-    console.log(customer);
-  };
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value.toLowerCase()); // Normalize search term
   };
-
   const filteredCustomers = customers.filter((customers) =>
     customers.name.toLowerCase().includes(searchTerm)
   );
-
+  const handleSubmit = async (e:any) =>{
+    e.preventDefault();
+    const dealerId = companySelected?.id;
+    const customerId = customerSelected?.id;
+    const sellerId = userId
+    try {
+      const res = await fetch(`${api}/create-doc`, {
+        method : "POST",
+        headers:{
+          "Content-Type": "application/json"
+        },
+        body : JSON.stringify({
+          dealerId,
+          customerId,
+          sellerId
+        })
+      })
+      const data = await res.json()
+      const docId = data.data.docId
+      if(docId){
+        router.push(`/crm-app/accoutings/${docId}`)
+      }
+      // console.log(docId)
+    } catch (error : Error | any) {
+      throw new Error("Something went wrong", error)
+    }
+  }
   // ! DEBUG
-  console.log("Customer data selected is", customerSelected);
-  console.log("Company data selected is", companySelected);
+  // console.log("Customer data selected is", customerSelected);
+  // console.log("Company data selected is", companySelected);
   return (
     <div className="flex flex-col justify-start gap-4">
-      <button onClick={confirmCreateDocs}>confirmCreateDocs</button>
+      <form action="" onSubmit={handleSubmit}>
+      {/* <button onClick={confirmCreateDocs}>confirmCreateDocs</button> */}
       <div className="flex flex-col gap-2">
         <label className="text-sm text-gray-700 font-medium">
           เลือกผู้ขาย:
@@ -132,8 +138,10 @@ export function CompanySelect() {
       )}
       <div className="flex justify-between">
         <Button variant={"destructive"}>ยกเลิก</Button>
-        <Button className="bg-blue-700">สร้างเอกสารใบเสนอราคา</Button>
+        <Button className="bg-blue-700" type="submit">สร้างเอกสารใบเสนอราคา</Button>
+        
       </div>
+      </form>
     </div>
   );
 }

@@ -1,5 +1,3 @@
-'use client'
-
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import isAuth from '@/lib/services/auth';

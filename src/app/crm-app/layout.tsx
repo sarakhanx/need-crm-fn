@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import MainSidebar from "@/components/Layout-Components/MainSidebar";
-import SearchComponent from "@/components/Search";
 
 export const metadata: Metadata = {
   title: "Create Next App",

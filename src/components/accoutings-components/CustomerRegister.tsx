@@ -11,12 +11,8 @@ import {
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { Errors} from "@/lib/types";
 import z from "zod";
-interface Errors {
-  fieldErrors: {
-    [field: string]: string[];
-  };
-}
 
 const CustomerSchema = z.object({
   name: z.string().min(1),

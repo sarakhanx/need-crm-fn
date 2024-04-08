@@ -13,10 +13,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Maxwidth from "./MaxWidth";
-import { AlertCircle, Asterisk, Terminal } from "lucide-react";
+import { AlertCircle, Asterisk } from "lucide-react";
 import React from "react";
-import { useRouter } from "next/navigation";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { useUserSession } from "@/lib/hooks/authHooks/useUserSession";
 
 const api = process.env.NEXT_PUBLIC_API;
 const schema = z
@@ -44,9 +44,8 @@ const schema = z
       }),
   })
 type FormFields = z.infer<typeof schema>;
-
 const SignInForm = ({onSuccess}:any) => {
-  const router = useRouter();
+  const {setUserSessionData} = useUserSession()
   const [visible, setVisible] = React.useState(false);
   const [formError , setFormError]  = React.useState<any>(null)
 
@@ -73,8 +72,12 @@ const SignInForm = ({onSuccess}:any) => {
             return;
         }
         const data = await postSignIn.json()
+        console.log(data)
         const token = await data.token
-        sessionStorage.setItem("token",token)
+        // const userSession = JSON.stringify({...data.userData , token})
+        // sessionStorage.setItem("session", userSession)
+        const sessionProvider = {...data.userData , token}
+        setUserSessionData(sessionProvider)
         onSuccess()
     } catch (error) {
         setFormError('Something went wrong. Please try again.');
@@ -95,9 +98,7 @@ const SignInForm = ({onSuccess}:any) => {
         clearTimeout(timeOut)
       }
     }
-   
   },[formError])
-
   return (
     <Maxwidth>
       <Form {...form}>
