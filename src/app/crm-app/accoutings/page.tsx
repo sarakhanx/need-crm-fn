@@ -20,11 +20,12 @@ import {
 } from "@/components/ui/dialog";
 import CustomerRegister from "@/components/accoutings-components/CustomerRegister";
 import CreateQuotation from "@/components/accoutings-components/CreateQuotation/CreateQuotation";
+import DocsPreview from "@/components/accoutings-components/getQuotation/DocsPreview";
 // import { useUserSession } from "@/lib/hooks/authHooks/useUserSession";
 
 export default function Page() {
   // const {userSession} = useUserSession();
-  // const user = userSession?.token
+  // const user = userSession?.id
   // console.log("user token =", user);
   useAuth();
   return (
@@ -108,7 +109,9 @@ export default function Page() {
         </CardContent>
       </Card>
     </div>
+    <DocsPreview/>
   </div>
+ 
 </Maxwidth>
   );
 }

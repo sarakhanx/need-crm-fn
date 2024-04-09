@@ -7,6 +7,7 @@ import z from "zod"
 import Maxwidth from "@/components/MaxWidth";
 import { useUserSession } from "@/lib/hooks/authHooks/useUserSession";
 import { Button } from "@/components/ui/button";
+import ProductRow from "@/components/ProductRow";
 
 const api = process.env.NEXT_PUBLIC_API
 
@@ -38,18 +39,11 @@ export default function Page(params : ParamsID){
     const [dealer , SetDealer] = React.useState<any>()
     const [seller , setSeller] = React.useState<any>()
     const [customer , setCustomer] = React.useState<any>()
-    // const [product , setProduct] = React.useState([])
-    
 
-    //! handle error
-    const [errors, setErrors] = React.useState<Errors>({
-        fieldErrors: {},
-      });
     useAuth();
     const id = params.params.id
       React.useEffect(()=>{
         const token =  userSession?.token
-        console.log(token)
         const fetchData = async () =>{
            if(token){
             try {
@@ -86,7 +80,8 @@ export default function Page(params : ParamsID){
         } 
         fetchData()
       },[userSession])
-      console.log(dealer)
+    //   console.log(dealer)
+    // console.log(token)
     return(
         <Maxwidth className={"mt-5"}>
             <hr />
@@ -106,43 +101,12 @@ export default function Page(params : ParamsID){
                 </div>
             </div>
             <hr className="mb-5"/>
-            <div className="flex flex-col justify-between gap-4">
-        <table>
-            <thead>
-                <tr>
-                    <th>ชื่อสินค้า</th>
-                    <th>ราคา</th>
-                    <th>ส่วนลด</th>
-                    <th>SKU</th>
-                    <th>size</th>
-                    <th>qty</th>
-                    <th>Note</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><Input id="title" type="text" className="" placeholder="ชื่อสินค้า" /></td>
-                    <td><Input id="price" type="text" className="" placeholder="ราคาต่อชิ้น" /></td>
-                    <td><Input id="discount" type="text" className="" placeholder="ส่วนลด" /></td>
-                    <td><Input id="sku" type="text" className="" placeholder="รหัส"/></td>
-                    <td><Input id="size" type="text" className="" placeholder="ขนาด"/></td>
-                    <td><Input id="qty" type="text" className="" placeholder="จำนวน"/></td>
-                    <td><Input id="note" type="text" className="" placeholder="หมายเหตุ"/></td>
-                    <td><Input id="total_price" type="text" className="" placeholder="0.00" disabled /></td>
-                </tr>
-               
-            </tbody>
-        </table>
-        <div className="flex justify-center text-center">
-                <Button className="w-96">+ Add Row</Button>
-                </div>
-        <hr />
+            <ProductRow params={params.params}/>
+            <hr />
         คนขาย
         <pre className="flex justify-between text-xl font-semibold text-wrap">
                 {JSON.stringify(seller)}
                 </pre>
-            </div>
     </Maxwidth>
     )
 }

@@ -1,6 +1,6 @@
 export interface ParamsID {
   params: {
-    id: string;
+    id: string | number;
   };
 }
 
@@ -28,6 +28,12 @@ export interface ContactData {
   }
 export  interface Errors {
     fieldErrors: {
+      [field: string]: string[];
+    };
+  }
+  export  interface Error {
+
+    productErrors: {
       [field: string]: string[];
     };
   }

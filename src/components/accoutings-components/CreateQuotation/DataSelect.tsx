@@ -136,10 +136,16 @@ export function DataSelect() {
           ))}
         </div>
       )}
-      <div className="flex justify-between">
+      {customerSelected && (
+        <div className="flex flex-col gap-2 m-2 border border-blue-700 p-5 rounded-lg">
+          <p className="border border-blue-700/50 p-2 rounded-md">ชื่อลูกค้า: {customerSelected.name || customerSelected.company_name}</p>
+          <p className="border border-blue-700/50 p-2 rounded-md">เบอร์โทรศัพท์: {customerSelected.customer_mobile || customerSelected.company_contact}</p>
+          <p className="border border-blue-700/50 p-2 rounded-md">อีเมล: {customerSelected.customer_email}</p>
+        </div>
+      )}
+      <div className="flex justify-between mt-4">
         <Button variant={"destructive"}>ยกเลิก</Button>
         <Button className="bg-blue-700" type="submit">สร้างเอกสารใบเสนอราคา</Button>
-        
       </div>
       </form>
     </div>
