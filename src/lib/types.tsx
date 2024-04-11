@@ -37,3 +37,30 @@ export  interface Errors {
       [field: string]: string[];
     };
   }
+  export interface Product {
+    Title: string;
+    Size: string;
+    Qty: string;
+    Price: string;
+    Discount: string;
+    "Total Price": string;
+  }
+
+  export interface Document {
+    id: string;
+    createdAt: string;
+    user_name: string;
+    user_lastname: string;
+    roles: string;
+    company_name: string;
+    company_address: string;
+    company_contact: string;
+    company_vat_id: string;
+    customer_name: string;
+    customer_lastname: string;
+    customer_address: string;
+    customer_mobile: string;
+    products: string | null;
+    customer_company_name: string;
+    productsArray: Product[];
+  }

@@ -55,10 +55,16 @@ export function DataSelect() {
     setCompanySelected(selectedCompany || null);
   };
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value.toLowerCase()); // Normalize search term
+    setSearchTerm(event.target.value.toLowerCase());
   };
-  const filteredCustomers = customers.filter((customers) =>
-    customers.name.toLowerCase().includes(searchTerm)
+  const filteredCustomers = customers.filter((customer) =>
+    customer.name?.toLowerCase().includes(searchTerm) ||
+  customer.lastname?.toLowerCase().includes(searchTerm) ||
+  customer.company_name?.toLowerCase().includes(searchTerm) ||
+  customer.company_vat?.toLowerCase().includes(searchTerm) ||
+  customer.company_contact?.toLowerCase().includes(searchTerm) ||
+  customer.customer_mobile?.toLowerCase().includes(searchTerm) ||
+  customer.customer_email?.toLowerCase().includes(searchTerm) 
   );
   const handleSubmit = async (e:any) =>{
     e.preventDefault();
@@ -132,7 +138,13 @@ export function DataSelect() {
           {filteredCustomers.map((customer, index) => (
             <div key={index} onClick={() => setCustomerSelected(customer)}>
                 <p className="text-md font-medium">{customer.name}</p>
+                <p className="text-md font-medium">{customer.company_name}</p>
+                <p className="text-md font-medium">{customer.customer_mobile}</p>
+                <p className="text-md font-medium">{customer.customer_email}</p>
+                <p className="text-md font-medium">{customer.company_vat}</p>
+                <hr />
             </div>
+            
           ))}
         </div>
       )}

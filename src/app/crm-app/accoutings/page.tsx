@@ -91,9 +91,9 @@ export default function Page() {
           <CardDescription className="text-sm">สร้างเอกสารใบเสนอราคา</CardDescription>
         </CardHeader>
         <CardContent>
-          <Dialog>
+          <Dialog >
             <DialogTrigger asChild>
-              <div className="text-center">
+              <div className="text-center self-baseline">
                 <Button className="w-full shadow-md">สร้างใบเสนอราคา</Button>
               </div>
             </DialogTrigger>
