@@ -82,7 +82,9 @@ main {
 .prompt-light {
   font-family: "Prompt", sans-serif;
   font-weight: 300;
-  font-style: normal;
+}
+.sm-font {
+  font-size: 0.1rem;
 }
 
 .prompt-regular {
@@ -109,21 +111,24 @@ main {
   font-style: normal;
 }
 
-#page {
+div#pdf-content {
   background: white;
   display: block;
   margin: 0 auto;
   margin-bottom: 0.5cm;
   box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+
 }
-#page[size="A4"] {  
+div#pdf-content{  
   width: 21cm;
   height: 29.7cm; 
 }
-@media print {
-  body, #page {
-    background: white;
-    margin: 0;
-    box-shadow: 0;
-  }
+
+/* Hide the default checkbox */
+input[type="checkbox"] {
+  width: 20px; /* Set the width */
+  height: 20px; /* Set the height */
+}
+.long-input {
+  width: 200px; /* Adjust the width as needed */
 }

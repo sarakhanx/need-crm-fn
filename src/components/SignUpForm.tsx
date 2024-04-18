@@ -4,12 +4,11 @@ import {
   FormField,
   FormItem,
   FormControl,
-  FormDescription,
   FormLabel,
   FormMessage,
 } from "./ui/form";
 import {z} from "zod"
-import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -17,14 +16,13 @@ import Maxwidth from "./MaxWidth";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { Asterisk, View } from "lucide-react";
+import { Asterisk } from "lucide-react";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const api = process.env.NEXT_PUBLIC_API;
 const schema = z
@@ -112,6 +110,7 @@ const schema = z
 type FormFields = z.infer<typeof schema>;
 
 const SignUpForm = () => {
+  const router = useRouter();
   const [visible, setVisible] = React.useState(false);
   const [formError , setFormError]  = React.useState<any>(null)
 
@@ -142,6 +141,7 @@ const SignUpForm = () => {
             setFormError("Can not POST in API, Please contact developer")
         }
         form.reset()
+        router.push('/signin')
         
     } catch (error) {
         setFormError('Something went wrong. Please try again.');
@@ -150,7 +150,15 @@ const SignUpForm = () => {
   };
 
   return (
+    <>
     <Maxwidth>
+    <div className="flex flex-col items-center justify-between w-full my-4 gap-4">
+          <h5 className="text-lg prompt-bold">Register to Need Shopping CRMs</h5>
+          <p className="text-muted-foreground prompt-light text-sm text-center">
+            สวัสดี! ยินดีที่ได้พบกันอีกครั้ง <br />กรุณากรอกข้อมูลด้านล่างเพื่อสมัครสมาชิก <br />ติดต่อ Developer หากพบปััญหาในการสมัครสมาชิก
+          </p>
+        </div>
+        <hr className="mb-5"/>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -359,6 +367,7 @@ const SignUpForm = () => {
         </form>
       </Form>
     </Maxwidth>
+    </>
   );
 };
 export default SignUpForm;

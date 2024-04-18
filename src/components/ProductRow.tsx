@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import type { Error, ParamsID } from "@/lib/types";
 import z from "zod";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 const api = process.env.NEXT_PUBLIC_API
 
@@ -31,6 +32,7 @@ const ProductSchema = z.object({
 type ProductFields = z.infer<typeof ProductSchema>;
 
 const ProductRow = (params: ParamsID) => {
+  const router = useRouter()
     const docs_Id = params.params?.id
   const [errors, setErrors] = React.useState<Error>({
     productErrors: {},
@@ -101,8 +103,9 @@ const ProductRow = (params: ParamsID) => {
             body: JSON.stringify({item , doc_id:docs_Id}),
           });
           const data = await response.json();
-          if (data.success) {
+          if (data.message) {
             console.log(`Product ${index + 1} submitted successfully!`, data);
+            router.push(`/crm/pdf/${docs_Id}`)
           }
         } catch (error) {
           console.error(`Error occurred while sending product ${index + 1} request:`, error);
@@ -113,12 +116,11 @@ const ProductRow = (params: ParamsID) => {
     await Promise.all(promises);
   
     setErrors(productErrors);
-  
-    console.log(product,docs_Id);
+    
   };
   
   return (
-    <Maxwidth>
+    <div className=" shadow-md p-5 rounded-md">
       <form onSubmit={handleSubmit}>
         <div>
           <div className="flex flex-col justify-between gap-4">
@@ -142,7 +144,7 @@ const ProductRow = (params: ParamsID) => {
                       <Input
                         id="title"
                         type="text"
-                        className=""
+                        className="long-input"
                         placeholder="ชื่อสินค้า"
                         name="title"
                         value={row.title}
@@ -271,7 +273,7 @@ const ProductRow = (params: ParamsID) => {
           </div>
         </div>
       </form>
-    </Maxwidth>
+    </div>
   );
 };
 export default ProductRow;

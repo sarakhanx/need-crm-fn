@@ -44,11 +44,14 @@ export  interface Errors {
     Price: string;
     Discount: string;
     "Total Price": string;
+    net: string;
   }
 
   export interface Document {
+    DocId: string;
     id: string;
     createdAt: string;
+    doc_createdAt: string;
     user_name: string;
     user_lastname: string;
     roles: string;
@@ -63,4 +66,6 @@ export  interface Errors {
     products: string | null;
     customer_company_name: string;
     productsArray: Product[];
+    net:string
+    company_logo_path:string
   }

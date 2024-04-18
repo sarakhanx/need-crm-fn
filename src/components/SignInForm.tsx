@@ -163,7 +163,7 @@ const SignInForm = ({onSuccess}:any) => {
               </FormItem>
             )}
           />         
-          <Button type="submit" className="bg-blue-700 w-full">
+          <Button type="submit" className="bg-blue-700 hover:bg-blue-400 w-full">
             Sign In
           </Button>
           {formError && (<Alert variant="destructive">

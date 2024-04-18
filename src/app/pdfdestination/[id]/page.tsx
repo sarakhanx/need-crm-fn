@@ -6,8 +6,6 @@ import type { Document, Product } from "@/lib/types";
 import { useUserSession } from "@/lib/hooks/authHooks/useUserSession";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Maxwidth from "@/components/MaxWidth";
-import Link from "next/link";
 
 const api = process.env.NEXT_PUBLIC_API;
 
@@ -17,39 +15,6 @@ export default function Page(params: ParamsID) {
   const id = params.params.id;
   const [data, setData] = React.useState<Document>();
   const [loading, setLoading] = React.useState<Boolean>(true);
-
-  const makePdf = async () => {
-    try {
-      console.log("Making PDF...");
-      const genPdf = await fetch(`${api}/genarate-pdf/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!genPdf.ok) {
-        throw new Error(`HTTP error! Status: ${genPdf.status}`);
-      }
-
-      // Convert the response data to a Blob
-      const blob = await genPdf.blob();
-
-      // Create a URL for the Blob
-      const blobUrl = URL.createObjectURL(blob);
-
-      // Create a link element
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.download = `qt-${id}.pdf`; // ?Set the file name for downloading
-      link.click();
-
-      return blobUrl; //?can return the URL if needed
-    } catch (error) {
-      console.error("Error in makePdf:", error);
-      throw new Error("Something went wrong");
-    }
-  };
 
   React.useEffect(() => {
     const prepareData = async () => {
@@ -287,16 +252,6 @@ export default function Page(params: ParamsID) {
           </div>
         </div>
       </div>
-      <Maxwidth>
-      <div className="flex justify-center gap-4 mb-5">
-      <Button className="bg-blue-700 mt-4 w-full" onClick={makePdf}>
-      Genarate PDF file
-      </Button>
-      <Button className="bg-green-700 mt-4 w-full">
-      <Link href="/crm-app/accoutings">Back to Accoutings dashboard</Link>
-      </Button>
-      </div>
-      </Maxwidth>
     </>
   );
 }

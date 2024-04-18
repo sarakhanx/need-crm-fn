@@ -13,35 +13,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { Document , Product } from "@/lib/types";
 
-
-// interface Product {
-//   Title: string;
-//   Size: string;
-//   Qty: string;
-//   Price: string;
-//   Discount: string;
-//   "Total Price": string;
-// }
-
-// interface Document {
-//   id: string;
-//   createdAt: string;
-//   user_name: string;
-//   user_lastname: string;
-//   roles: string;
-//   company_name: string;
-//   company_address: string;
-//   company_contact: string;
-//   company_vat_id: string;
-//   customer_name: string;
-//   customer_lastname: string;
-//   customer_address: string;
-//   customer_mobile: string;
-//   products: string | null;
-//   customer_company_name: string;
-//   productsArray: Product[];
-// }
-
 type Data = Document[];
 
 const api = process.env.NEXT_PUBLIC_API;
@@ -51,6 +22,7 @@ const DocsPreview = () => {
   const id = userSession?.id;
 
   const [userDocs, setUserDocs] = React.useState<Document[]>([]);
+  const [ status , setStatus] = React.useState<Boolean>(false)
 
   React.useEffect(() => {
     const dataFetcher = async () => {
@@ -66,6 +38,7 @@ const DocsPreview = () => {
           const data = await res.json();
           setUserDocs(data.docs);
           console.log(data);
+          setStatus(true)
         }
       } catch (error: any) {
         throw new Error("Something went wrong", error);
@@ -76,19 +49,20 @@ const DocsPreview = () => {
 
   return (
     <>
-      {/* <code> {JSON.stringify(userDocs)}</code> */}
-      <div>
+      <div className="mt-4">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Docs Preview</CardTitle>
-            <CardDescription className="text-sm">Preview Docs</CardDescription>
+            <CardTitle className="text-lg prompt-semibold">รายการเอกสารต่างๆ</CardTitle>
+            <CardDescription className="text-xs text-muted-foreground prompt-light">
+              {status ? "รายการเอกสารของท่าน" : "เอกสารของท่านจะแสดงผลที่นี่ เร็วๆนี้"}
+            </CardDescription>
           </CardHeader>
           {userDocs.map((doc, i) => (
             <CardContent key={i} className="">
               <div className="flex justify-between self-center">
                 <div className="flex-col">
                   <p className="text-xs underline">เลขที่เอกสาร #</p>
-                  <h3 className="text-center">{i + 1}</h3>
+                  <h3 className="text-center">{doc.id}</h3>
                 </div>
                 <div className="text-xs">
                   <p className="text-xs underline">คนขาย</p>
