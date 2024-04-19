@@ -24,7 +24,7 @@ export default function Page(params: ParamsID) {
       const genPdf = await fetch(`${api}/genarate-pdf/${id}`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/pdf",
         },
       });
 
