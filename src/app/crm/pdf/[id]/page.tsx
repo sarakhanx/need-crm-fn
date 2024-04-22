@@ -47,7 +47,7 @@ export default function Page(params: ParamsID) {
       return blobUrl; //?can return the URL if needed
     } catch (error) {
       console.error("Error in makePdf:", error);
-      throw new Error("Something went wrong");
+
     }
   };
 
