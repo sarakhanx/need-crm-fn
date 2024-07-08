@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Maxwidth from "@/components/MaxWidth";
+import Maxwidth from "../../../components/MaxWidth";
 import SearchComponent from "@/components/Search";
 import useAuth from "@/lib/hooks/useAuth";
 import Companies from "@/components/accoutings-components/Companies";

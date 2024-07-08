@@ -1,6 +1,6 @@
 'use client'
 
-import Maxwidth from "@/components/MaxWidth";
+import Maxwidth from "../../../components/MaxWidth";
 import useAuth from "@/lib/hooks/useAuth";
 
 export default function Page() {

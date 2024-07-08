@@ -4,32 +4,37 @@ import React from "react";
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import useToggleHooks from "../../lib/hooks/ToggleHooks";
-import { PanelRightOpen } from "lucide-react";
+// import useToggleHooks from "../../lib/hooks/ToggleHooks";
+import { PanelLeftDashed } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { Select, SelectContent, SelectGroup, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
+
 
 
 const MainSidebar = () => {
   const pathname = usePathname();
-  const [isOpen, setIsOpen, ref] = useToggleHooks(false);
+  // const [isOpen, setIsOpen, ref] = useToggleHooks(false);
 
 
 
   
   return (
-    <aside
-      className={`flex flex-col justify-between h-screen bg-gray-900/50 transition-all ease-in-out duration-500 transform ${
-        isOpen ? "w-48" : ""
-      }`}
-      ref={ref}
-    >
-      <div className="p-2 space-y-1">
-        <PanelRightOpen
-          className="focus:outline-none h-6 w-6 cursor-pointer"
-          onClick={() => setIsOpen(!isOpen)}
-        />
-        <div>
-          {isOpen && (
-            <div>
+    <div className="w-20 h-screen bg-gray-300 shadow-sm">
+    <Sheet>
+      <SheetTrigger asChild>
+      <PanelLeftDashed className="h-10 w-10 mt-4 mx-auto" />
+      </SheetTrigger>
+      <SheetContent side="left" aria-describedby={undefined}>
+        <SheetHeader>
+          <SheetTitle>Menu Navigation</SheetTitle>
+        </SheetHeader>
+        <div className="space-y-4 mt-5">
               <Button
                 variant={"ghost"}
                 className={`w-full ${
@@ -38,7 +43,7 @@ const MainSidebar = () => {
                     : ""
                 }`}
               >
-                <Link href={"/crm-app"}>NEED CRMs Application</Link>
+                <Link href={"/crm-app"} className="prompt-semibold -tracking-tighter">NEED CRMs Application</Link>
               </Button>
               <Button
                 variant={"ghost"}
@@ -48,17 +53,17 @@ const MainSidebar = () => {
                     : ""
                 }`}
               >
-                <Link href={"/crm-app/dashboard"}>Dashboard</Link>
+                <Link href={"/crm-app/dashboard"} className="prompt-semibold -tracking-tighter">Dashboard</Link>
               </Button>
               <Button
                 variant={"ghost"}
                 className={`w-full ${
-                  pathname === "/crm-app/calendar"
+                  pathname === "/crm-app/products-bar"
                     ? "bg-blue-700 text-white font-bold"
                     : ""
                 }`}
               >
-                <Link href={"/crm-app/calendar"}>Calendar</Link>
+                <Link href={"/crm-app/products-bar"} className="prompt-semibold -tracking-tighter">ขอบาร์สินค้าเข้าระบบ</Link>
               </Button>
               <Button
                 variant={"ghost"}
@@ -68,13 +73,65 @@ const MainSidebar = () => {
                     : ""
                 }`}
               >
-                <Link href={"/crm-app/accoutings"}>Accouting</Link>
+                <Link href={"/crm-app/accoutings"} className="prompt-semibold -tracking-tighter">ออกใบกำกับภาษี</Link>
               </Button>
+
+              <Select>
+                <SelectTrigger>
+                  <SelectValue className="prompt-semibold" placeholder="เลือกประเภทเอกสาร"/>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>
+                      ประเภทเอกสาร
+                    </SelectLabel>
+                    {/* //NOTE - Select Grouop for k.Som Docs*/}
+                    <div className="space-y-4">
+                    <Button variant={"ghost"}
+                    className={`w-full ${
+                      pathname === "/crm-app/docs/deliverynotes"
+                        ? "bg-blue-700 text-white font-bold"
+                        : ""
+                    }`}
+                    >
+                      <Link className="prompt-semibold -tracking-tighter" href={"/crm-app/docs/deliverynotes"}>ใบส่งสินค้า</Link>
+                      </Button>
+                    <Button variant={"ghost"}
+                    className={`w-full ${
+                      pathname === "/crm-app/docs/reciptnotes"
+                        ? "bg-blue-700 text-white font-bold"
+                        : ""
+                    }`}
+                    >
+                      <Link className="prompt-semibold -tracking-tighter" href={"/crm-app/docs/reciptnotes"}>ใบเสร็จรับเงิน</Link>
+                      </Button>
+                    <Button variant={"ghost"}
+                    className={`w-full ${
+                      pathname === "/crm-app/docs/freightclaim"
+                        ? "bg-blue-700 text-white font-bold"
+                        : ""
+                    }`}
+                    >
+                      <Link className="prompt-semibold -tracking-tighter" href={"/crm-app/docs/freightclaim"}>ใบเบิกค่าขนส่ง</Link>
+                      </Button>
+                    <Button variant={"ghost"}
+                    className={`w-full ${
+                      pathname === "/crm-app/docs/vat-require"
+                        ? "bg-blue-700 text-white font-bold"
+                        : ""
+                    }`}
+                    >
+                      <Link className="prompt-semibold -tracking-tighter" href={"/crm-app/docs/vat-require"}>ฟอร์มขอ Vat</Link>
+                      </Button>
+                    </div>
+                    
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
-          )}
-        </div>
-      </div>
-    </aside>
+      </SheetContent>
+    </Sheet>
+    </div>
   );
 };
 

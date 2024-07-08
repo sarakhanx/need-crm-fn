@@ -69,3 +69,11 @@ export  interface Errors {
     net:string
     company_logo_path:string
   }
+
+  export interface DeleveryNotes {
+    id : number
+    image :  any | null
+    detail : string
+    price : number
+    qty : number
+  }

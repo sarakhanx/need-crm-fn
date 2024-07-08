@@ -2,11 +2,9 @@
 import React from "react";
 import useAuth from "@/lib/hooks/useAuth";
 import { ParamsID, Errors } from "@/lib/types";
-import { Input } from "@/components/ui/input";
 import z from "zod";
-import Maxwidth from "@/components/MaxWidth";
+import Maxwidth from "../../../../components/MaxWidth";
 import { useUserSession } from "@/lib/hooks/authHooks/useUserSession";
-import { Button } from "@/components/ui/button";
 import ProductRow from "@/components/ProductRow";
 
 const api = process.env.NEXT_PUBLIC_API;
