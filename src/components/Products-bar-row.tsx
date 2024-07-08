@@ -189,6 +189,9 @@ const ProductsBarRow = () => {
             @page {
             margin: 0.2cm;
     }
+            h3 {
+            text-align: center;
+            }
 
             table {
               width: 100%;
