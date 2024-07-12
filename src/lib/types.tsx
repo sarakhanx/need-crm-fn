@@ -77,3 +77,45 @@ export  interface Errors {
     price : number
     qty : number
   }
+
+export interface FormContent {
+  id : number,
+  content : string,
+  qty : number,
+  price : number,
+  discount? : number, //ส่วนลด
+  amount : number, //สำหรับยอดรวม
+  total : number,
+  article? : string, //รหัสสินค้า
+  totalToText? : any
+}
+
+export interface CompanyInForm {
+  name : string,
+  comAddress1 : string,
+  comAddress2 : string,
+  comTel : string
+  comVat : string
+  logo? : any | null
+  comEmail? : string
+}
+
+export interface DocsInForm {
+id : string,
+createdAt? : string | null,
+tel? : string | null,
+email? : string | null,
+}
+
+export interface CustomerData {
+  name? : string,
+  address1? : string
+  address2? : string
+  tel? : string
+  vat? : string
+  note? : string
+}
+
+export interface DocNoteInForm {
+  content? : string | null
+}

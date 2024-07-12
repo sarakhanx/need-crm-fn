@@ -155,3 +155,8 @@ button span {
 ::-webkit-resizer {
   display: none;
 }
+
+
+/* * { 
+  border: solid 0.1px red;
+} */

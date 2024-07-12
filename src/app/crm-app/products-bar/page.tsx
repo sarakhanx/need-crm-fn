@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import MaxA4 from '@/components/wrapper/maxA4'
 import ProductsBarRow from '../../../components/Products-bar-row'
 
 export default function Page() {
