@@ -87,7 +87,7 @@ const MainSidebar = () => {
                     </SelectLabel>
                     {/* //NOTE - Select Grouop for k.Som Docs*/}
                     <div className="space-y-4">
-                    <Button variant={"ghost"}
+                    {/* <Button variant={"ghost"}
                     className={`w-full ${
                       pathname === "/crm-app/docs/deliverynotes"
                         ? "bg-blue-700 text-white font-bold"
@@ -95,7 +95,7 @@ const MainSidebar = () => {
                     }`}
                     >
                       <Link className="prompt-semibold -tracking-tighter" href={"/crm-app/docs/deliverynotes"}>ใบส่งสินค้า</Link>
-                      </Button>
+                      </Button> */}
                     <Button variant={"ghost"}
                     className={`w-full ${
                       pathname === "/crm-app/docs/reciptnotes"
@@ -103,7 +103,7 @@ const MainSidebar = () => {
                         : ""
                     }`}
                     >
-                      <Link className="prompt-semibold -tracking-tighter" href={"/crm-app/docs/reciptnotes"}>ใบเสร็จรับเงิน</Link>
+                      <Link className="prompt-semibold -tracking-tighter" href={"/crm-app/docs/reciptnotes"}>ใบเสร็จรับเงิน/ใบส่งสินค้า</Link>
                       </Button>
                     <Button variant={"ghost"}
                     className={`w-full ${

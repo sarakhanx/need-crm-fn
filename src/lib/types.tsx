@@ -88,6 +88,7 @@ export interface FormContent {
   total : number,
   article? : string, //รหัสสินค้า
   totalToText? : any
+  image? : any | null
 }
 
 export interface CompanyInForm {
