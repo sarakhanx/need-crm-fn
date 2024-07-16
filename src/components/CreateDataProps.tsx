@@ -198,7 +198,7 @@ const CreateDataProps = ({
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button>สร้างใบส่งของ / ใบเสร็จรับเงิน</Button>
+          <Button className="bg-blue-500">สร้างใบส่งของ / ใบเสร็จรับเงิน</Button>
         </DialogTrigger>
         <DialogContent
           className="max-w-fit overflow-y-scroll max-h-screen"

@@ -25,14 +25,14 @@ const MainSidebar = () => {
 
   
   return (
-    <div className="w-20 h-screen bg-gray-300 shadow-sm">
+    <div className="w-20 h-lvh bg-gray-500/10 shadow-sm">
     <Sheet>
       <SheetTrigger asChild>
       <PanelLeftDashed className="h-10 w-10 mt-4 mx-auto" />
       </SheetTrigger>
       <SheetContent side="left" aria-describedby={undefined}>
         <SheetHeader>
-          <SheetTitle>Menu Navigation</SheetTitle>
+          <SheetTitle className="font-semibold text-lg prompt-semibold -tracking-tighter underline underline-offset-2 text-center p-5 bg-blue-900/30 rounded-3xl">รายการโปรแกรมต่างๆ</SheetTitle>
         </SheetHeader>
         <div className="space-y-4 mt-5">
               <Button

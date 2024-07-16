@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import BodyTable from "@/components/BodyTable";
 import CreateVatHeaderComponent from "@/components/CreateVatHeaderComponent";
 import DocNote from "@/components/DocNote";
+import Link from "next/link";
 
 
 // const cAddress = {
@@ -56,13 +57,26 @@ export default function Page() {
   });
 
   return (
-    <div className="flex flex-col justify-between">
-      <div className="w-full flex justify-center">
-        <h1 className="text-2xl font-semibold prompt-semibold">
-          ฟอร์มขอ VAT (NEED PAGE)
+    <div className="flex flex-col justify-start mt-2 p-2 mx-5">
+      <div className="w-full">
+        <h1 className="prompt-semibold text-2xl text-start">
+          ฟอร์มขอ VAT
         </h1>
+        <p className="text-sm text-muted-foreground font-normal prompt-light text-start">
+          แบบฟอร์มการขอ VAT
+        </p>
       </div>
-      <MaxA4>
+      <div className="flex justify-start space-x-4 mt-2">
+        <Button className="bg-blue-500 hover:bg-blue-900">
+          <Link href={"/kb/productbar"}>วิธีใช้งาน Page</Link>
+        </Button>
+        <Button className="hover:bg-red-900" variant="destructive" onClick={()=>{alert("ยังทำไม่เสร็จจ้าาา มีปํญหาอะไรเดินมาบอกที่๋โต๊ะได้เลย")}}>
+          <Link href={"#"}>แจ้งปัญหาการใช้งาน</Link>
+        </Button>
+      </div>
+      <hr className="mt-4" />
+      <div className="mt-5">
+      <MaxA4 >
         <div className="flex flex-col justify-between gap-4" ref={contentToPrint}>
           {/* //TODO :Heeader Address */}
           <div className="flex flex-col gap-y-4">
@@ -72,6 +86,7 @@ export default function Page() {
           <DocNote docNoteData={docNoteData} />
         </div>
       </MaxA4>
+      </div>
       <div className="flex justify-center mt-5 gap-4 p-2">
         <CreateVatRequire
           TableProps={handleProps}
@@ -80,7 +95,7 @@ export default function Page() {
           NoteProps={handleNoteData}
         />
         <Button
-          className="w-96 text-white bg-amber-500"
+          className="w-96"
           onClick={() => {
             handlePrint(null, () => contentToPrint.current);
           }}

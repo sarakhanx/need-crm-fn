@@ -5,11 +5,12 @@ import FreightClaimComponent from "@/components/FrieghtClaimComponent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import MaxA4 from "@/components/wrapper/maxA4";
+import Link from "next/link";
 import React from "react";
 import { useReactToPrint } from "react-to-print";
 
 
-export default function page() {
+export default function Page() {
   const [props, setSubmittedData] = React.useState(null);
   const handleProps = (data: any) => {
     setSubmittedData(data);
@@ -32,8 +33,27 @@ export default function page() {
 
   return (
     <div>
-      <h1 className="text-2xl">Freight Claim Page Form</h1>
-      <div className="w-full flex justify-center">
+      <div className="flex flex-col justify-start mt-2 p-2 mx-5">
+      <div className="w-full">
+        <h1 className="prompt-semibold text-2xl text-start">
+        ใบเบิกค่าขนส่งสินค้า
+        </h1>
+        <p className="text-sm text-muted-foreground font-normal prompt-light text-start">
+        ใบเบิกค่าขนส่งสินค้า กด Print ได้ทันที
+        </p>
+      </div>
+      
+      <div className="flex justify-start space-x-4 mt-2">
+        <Button className="bg-blue-500 hover:bg-blue-900">
+          <Link href={"/kb/productbar"}>วิธีใช้งาน Page</Link>
+        </Button>
+        <Button className="hover:bg-red-900" variant="destructive" onClick={()=>{alert("ยังทำไม่เสร็จจ้าาา มีปํญหาอะไรเดินมาบอกที่๋โต๊ะได้เลย")}}>
+          <Link href={"#"}>แจ้งปัญหาการใช้งาน</Link>
+        </Button>
+      </div>
+      <hr className="mt-4" />
+      </div>
+      <div className="w-full flex justify-center mt-5">
         <MaxA4 >
           <div ref={contentToPrint}>
           <div className="flex justify-center items-center" >
@@ -98,7 +118,7 @@ export default function page() {
       </div>
       <div className="flex justify-center mt-5 gap-4 p-2">
         <FreightClaimComponent TableProps={handleProps} />
-        <Button className="w-96 text-white bg-amber-500"
+        <Button className="w-96 text-white"
         onClick={()=>{
           handlePrint(null , ()=> contentToPrint.current)
         }}

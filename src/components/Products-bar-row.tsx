@@ -162,7 +162,7 @@ const ProductsBarRow = () => {
         </div>
       </MaxA4>
       <div>
-        <div className="w-full flex justify-center gap-x-4 p-2 ">
+        <div className="w-full flex justify-center gap-x-4 p-2 mt-5 ">
           <Button type="button" className="w-96 bg-green-500" onClick={addRow}>
             + Add Row
           </Button>
@@ -175,7 +175,7 @@ const ProductsBarRow = () => {
           </Button>
         </div>
         <Button
-          className="w-full bg-amber-500"
+          className="w-full"
           onClick={() => {
             handlePrint(null, () => contentToPrint.current);
           }}

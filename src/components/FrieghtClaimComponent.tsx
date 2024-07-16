@@ -98,7 +98,7 @@ const FreightClaimComponent = ({TableProps} : any) => {
         <div>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-        <Button className="bg-blue-500">สร้างข้อมูล</Button>
+        <Button className="bg-blue-500">สร้างข้อมูลภายในเอกสาร</Button>
                 </DialogTrigger>
                 <DialogContent
                 className="max-w-fit overflow-y-scroll max-h-screen"

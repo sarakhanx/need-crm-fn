@@ -161,7 +161,7 @@ const CreateVatRequire = ({
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button className="bg-blue-500">สร้างข้อมูลเอกสาร</Button>
+          <Button className="bg-blue-500 hover:bg-blue-900">สร้างข้อมูลภายในเอกสาร</Button>
         </DialogTrigger>
         <DialogContent
           className="max-w-fit overflow-y-scroll max-h-screen"
