@@ -46,8 +46,7 @@ const ProductsBarRow = () => {
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const { name, value } = e.target;
-    const newData =
-      name === "price" || name === "qty" ? parseFloat(value) || "" : value;
+    const newData = name === "price" || name === "qty" ? parseFloat(value.replace(/,/g, "")) || "" : value;
     const updateRows = data.map((row) =>
       row.id === id ? { ...row, [name]: newData } : row
     );
@@ -75,6 +74,13 @@ const ProductsBarRow = () => {
     },
     removeAfterPrint: true,
   });
+
+  const formatNumber = (number : number) => {
+    return new Intl.NumberFormat('en-US').format(number);
+  };
+  const formatInputValue = (value: number) => {
+    return formatNumber(value);
+  };
 
   return (
     <div className="flex flex-col justify-center items-center mt-5">
@@ -149,9 +155,9 @@ const ProductsBarRow = () => {
                   <input
                     id="price"
                     name="price"
-                    value={row.price}
+                    value={formatInputValue(row.price)}
                     onChange={(e) => handleAddRows(row.id, e)}
-                    type="number"
+                    type="text"
                     placeholder="ราคา"
                     className="w-[150px]"
                   />
