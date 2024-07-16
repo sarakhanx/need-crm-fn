@@ -58,10 +58,10 @@ export default function Page() {
           <div className="flex flex-col justify-start mt-2 p-2 mx-5">
       <div className="w-full">
         <h1 className="prompt-semibold text-2xl text-start">
-          ฟอร์มเบิกค่าขนส่งสินค้า / ฟอร์มใบเสร็จรับเงิน
+          ฟอร์มขนส่งสินค้า / ฟอร์มใบเสร็จรับเงิน
         </h1>
         <p className="text-sm text-muted-foreground font-normal prompt-light text-start">
-        ฟอร์มเบิกค่าขนส่งสินค้า / ฟอร์มใบเสร็จรับเงิน สามารถพิมพ์หรืออัพโหลดรูปลงไปที่เอกสาร และกด Print ได้ทันที
+        ฟอร์มส่งสินค้า / ฟอร์มใบเสร็จรับเงิน สามารถพิมพ์หรืออัพโหลดรูปลงไปที่เอกสาร และกด Print ได้ทันที
         </p>
       </div>
       

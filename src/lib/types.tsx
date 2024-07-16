@@ -76,6 +76,7 @@ export  interface Errors {
     detail : string
     price : number
     qty : number
+    branch? : string
   }
 
 export interface FormContent {

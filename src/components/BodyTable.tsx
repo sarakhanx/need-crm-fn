@@ -24,7 +24,6 @@ export default function BodyTable({ props }: BodyTableProps) {
   React.useEffect(() => {
     if (props && props.length > 0) {
       setContentForm(props);
-      console.log(contentForm);
     }
   }, [props]);
 
@@ -35,6 +34,28 @@ export default function BodyTable({ props }: BodyTableProps) {
       return textToTotal;
     }
     return "";
+  };
+  const formatNumber = (number : number) => {
+    return new Intl.NumberFormat('en-US').format(number);
+  };
+
+  //NOTE : edit table
+  const unformatNumber = (number: string) => {
+    return parseFloat(number.replace(/,/g, ''));
+  };
+
+  const handleInputChange = (id: number, name: string, value: string) => {
+    const updatedContentForm = contentForm.map((item) => {
+      if (item.id === id) {
+        return { ...item, [name]: name === 'price' || name === 'discount' || name === 'amount' ? unformatNumber(value) : value };
+      }
+      return item;
+    });
+    setContentForm(updatedContentForm);
+  };
+
+  const formatInputValue = (value: number) => {
+    return formatNumber(value);
   };
 
   if (props) {
@@ -69,9 +90,20 @@ export default function BodyTable({ props }: BodyTableProps) {
                   {data.content}
                 </TableCell>
                 <TableCell>{data.qty}</TableCell>
-                <TableCell>{data.price}</TableCell>
-                {data.discount ? <TableCell>{data.discount}</TableCell> : null}
-                <TableCell>{data.amount}</TableCell>
+                <TableCell>{formatNumber(data.price)}</TableCell>
+                {/* <TableCell>
+                  <input
+                    id="price"
+                    name="price"
+                    value={formatInputValue(data.price)}
+                    onChange={(e) => handleInputChange(data.id, e.target.name, e.target.value)}
+                    type="text"
+                    placeholder="ราคา"
+                    className="w-[150px]"
+                  />
+                  </TableCell> */}
+                {data.discount ? <TableCell>{formatNumber(data.discount)}</TableCell> : null}
+                <TableCell>{formatNumber(data.amount)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -95,7 +127,7 @@ export default function BodyTable({ props }: BodyTableProps) {
                   รวมทั้งสิ้น : {totalToText()}
                 </TableCell>
               )}
-              <TableCell>{contentForm[0]?.total}</TableCell>
+              <TableCell>{formatNumber(contentForm[0]?.total)}</TableCell>
             </TableRow>
           </TableFooter>
         </Table>

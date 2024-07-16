@@ -12,6 +12,7 @@ const ProductsBarRow = () => {
       id: 1,
       image: null,
       detail: "",
+      branch:"",
       price: 0,
       qty: 0,
     },
@@ -24,6 +25,7 @@ const ProductsBarRow = () => {
       id: newRowId,
       image: null,
       detail: "",
+      branch:"",
       price: 0,
       qty: 0,
     };
@@ -85,9 +87,10 @@ const ProductsBarRow = () => {
         <table className="w-full border border-black" >
           <thead>
             <tr className="bg-gray-500/50 prompt-regular text-xs shadow-sm">
-              <th className="text-start">เลขที่เอกสาร</th>
+              <th className="text-start">ลำดับ</th>
               <th className="text-start">ภาพสินค้า</th>
               <th className="text-start">ชื่อสินค้า</th>
+              <th className="text-start">สาขา</th>
               <th className="text-start">ราคา</th>
               <th className="text-start">จํานวน</th>
             </tr>
@@ -129,7 +132,17 @@ const ProductsBarRow = () => {
                     name="detail"
                     value={row.detail}
                     onChange={(e) => handleAddRows(row.id, e)}
-                    className="w-96 text-xs h-auto overscroll-contain"
+                    className="w-[200px] text-xs h-auto overscroll-contain"
+                  />
+                </td>
+                <td>
+                  <input
+                    id="branch"
+                    name="branch"
+                    onChange={(e) => handleAddRows(row.id, e)}
+                    type="text"
+                    placeholder="สาขา"
+                    className="w-[100px]"
                   />
                 </td>
                 <td>
@@ -140,7 +153,7 @@ const ProductsBarRow = () => {
                     onChange={(e) => handleAddRows(row.id, e)}
                     type="number"
                     placeholder="ราคา"
-                    className="w-12"
+                    className="w-[150px]"
                   />
                 </td>
                 <td>
