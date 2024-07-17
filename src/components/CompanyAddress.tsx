@@ -32,46 +32,47 @@ export default function CompanyAddress({
     setDoc(documentData ?? undefined);
     setCompany(companyData ?? undefined);
   }, [documentData, companyData]);
+  
 
   if (documentData || companyData) {
     return (
       <div>
         <div className="w-full flex justify-between">
-          <div className="flex-col justify-between prompt-semibold">
+          <div className="flex flex-col justify-between gap-1 prompt-semibold">
             <img src={`${company?.logo}`} alt="logo" className="w-24" />
-            <p className="text-sm">{company?.name}</p>
-            <p className="text-xs text-muted-foreground font-light">
+            <p className="text-sm" >{company?.name}</p>
+            <p className="text-xs font-light">
               {company?.comAddress1}
             </p>
-            <p className="text-xs text-muted-foreground font-light">
-              {company?.comAddress1}
+            <p className="text-xs font-light">
+              {company?.comAddress2}
             </p>
-            <p className="text-xs text-muted-foreground font-light">
+            <p className="text-xs font-light">
               {company?.comEmail}
             </p>
-            <p className="text-xs text-muted-foreground font-light">
+            <p className="text-xs font-light">
               {company?.comTel}
             </p>
-            <p className="text-xs text-muted-foreground font-light">
+            <p className="text-xs font-light">
               <strong>VAT&nbsp;:&nbsp;</strong>
               {company?.comVat}
             </p>
           </div>
-          <div className="flex justify-between prompt-semibold">
-            <div className="flex-col justify-start">
-              <p className="text-xs text-muted-foreground font-light">
+          <div className="prompt-semibold">
+            <div className="flex flex-col justify-start gap-1">
+              <p className="text-xs font-light">
                 <strong>เลขที่เอกสาร&nbsp;:&nbsp;</strong>
                 {doc?.id}
               </p>
-              <p className="text-xs text-muted-foreground font-light">
+              <p className="text-xs font-light">
                 <strong>วันที่&nbsp;:&nbsp;</strong>
                 {doc?.createdAt}
               </p>
-              <p className="text-xs text-muted-foreground font-light">
+              <p className="text-xs font-light">
                 <strong className="font-semibold">Tel&nbsp;:&nbsp;</strong>
                 {doc?.tel}
               </p>
-              <p className="text-xs text-muted-foreground font-light">
+              <p className="text-xs font-light">
                 <strong>Email&nbsp;:&nbsp;</strong>
                 {doc?.email}
               </p>

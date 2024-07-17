@@ -5,6 +5,7 @@ import { DeleveryNotes } from "../lib/types";
 import MaxA4 from "./wrapper/maxA4";
 import { Button } from "./ui/button";
 import { useReactToPrint } from "react-to-print";
+import { Input } from "./ui/input";
 
 const ProductsBarRow = () => {
   const [data, setData] = React.useState<DeleveryNotes[]>([
@@ -12,7 +13,7 @@ const ProductsBarRow = () => {
       id: 1,
       image: null,
       detail: "",
-      branch:"",
+      branch: "",
       price: 0,
       qty: 0,
     },
@@ -25,7 +26,7 @@ const ProductsBarRow = () => {
       id: newRowId,
       image: null,
       detail: "",
-      branch:"",
+      branch: "",
       price: 0,
       qty: 0,
     };
@@ -46,7 +47,10 @@ const ProductsBarRow = () => {
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const { name, value } = e.target;
-    const newData = name === "price" || name === "qty" ? parseFloat(value.replace(/,/g, "")) || "" : value;
+    const newData =
+      name === "price" || name === "qty"
+        ? parseFloat(value.replace(/,/g, "")) || ""
+        : value;
     const updateRows = data.map((row) =>
       row.id === id ? { ...row, [name]: newData } : row
     );
@@ -75,8 +79,8 @@ const ProductsBarRow = () => {
     removeAfterPrint: true,
   });
 
-  const formatNumber = (number : number) => {
-    return new Intl.NumberFormat('en-US').format(number);
+  const formatNumber = (number: number) => {
+    return new Intl.NumberFormat("en-US").format(number);
   };
   const formatInputValue = (value: number) => {
     return formatNumber(value);
@@ -86,98 +90,122 @@ const ProductsBarRow = () => {
     <div className="flex flex-col justify-center items-center mt-5">
       <MaxA4>
         <div ref={contentToPrint}>
-        <div className="flex flex-col justify-between">
-        <div className="w-full text-center mb-4">
-        <h3 className='prompt-semibold text-lg'>รายการขอบาร์สินค้าเข้าระบบ</h3>
-        </div>
-        <table className="w-full border border-black" >
-          <thead>
-            <tr className="bg-gray-500/50 prompt-regular text-xs shadow-sm">
-              <th className="text-start">ลำดับ</th>
-              <th className="text-start">ภาพสินค้า</th>
-              <th className="text-start">ชื่อสินค้า</th>
-              <th className="text-start">สาขา</th>
-              <th className="text-start">ราคา</th>
-              <th className="text-start">จํานวน</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => (
-              <tr
-                key={`${row.id}`}
-                className="prompt-regular text-xs border-b-2 border-gray-500"
-              >
-                <td className="w-5 text-center">{row.id}</td>
-                <td>
-                  {!row.image && (
-                    <label className="tracking-tighter">
-                      image
+          <div className="flex flex-col justify-between">
+            <div className="w-full text-center mb-4">
+              <h3 className="prompt-semibold text-lg">
+                รายการขอบาร์สินค้าเข้าระบบ
+              </h3>
+            </div>
+            <div className="flex justify-end p-2">
+              <div className="flex items-center">
+                <label className="font-medium prompt-semibold text-หท mr-2 whitespace-nowrap">
+                  ผู้ขอ
+                </label>
+                <Input
+                  type="text"
+                  placeholder="ชื่อผู้ขอ"
+                  className="flex-grow border border-none"
+                />
+              </div>
+              <div className="flex items-center">
+                <label className="font-medium prompt-semibold text-sm mr-2 whitespace-nowrap">
+                  วันที่ขอ
+                </label>
+                <Input
+                  type="text"
+                  placeholder="วันที่ขอ"
+                  className="flex-grow border border-none"
+                />
+              </div>
+            </div>
+            <table className="w-full border border-black">
+              <thead>
+                <tr className="bg-gray-500/50 prompt-regular text-xs shadow-sm">
+                  <th className="text-start">ลำดับ</th>
+                  <th className="text-start">ภาพสินค้า</th>
+                  <th className="text-start">ชื่อสินค้า</th>
+                  <th className="text-start">สาขา</th>
+                  <th className="text-start">ราคา</th>
+                  <th className="text-start">จํานวน</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((row, index) => (
+                  <tr
+                    key={`${row.id}`}
+                    className="prompt-regular text-xs border-b-2 border-gray-500"
+                  >
+                    <td className="w-5 text-center">{row.id}</td>
+                    <td>
+                      {!row.image && (
+                        <label className="tracking-tighter">
+                          image
+                          <input
+                            type="file"
+                            name="image"
+                            className="w-20"
+                            onChange={(e) => handleFileChange(e, index)}
+                          />
+                        </label>
+                      )}
+                      {row.image && row.image instanceof File && (
+                        <div className="flex justify-center items-center">
+                          <img
+                            src={URL.createObjectURL(row.image)}
+                            alt={`Selected ${row.id}`}
+                            width={150}
+                            className="p-1"
+                          />
+                        </div>
+                      )}
+                    </td>
+                    <td>
+                      <textarea
+                        id="detail"
+                        placeholder="ชื่อสินค้า"
+                        name="detail"
+                        value={row.detail}
+                        onChange={(e) => handleAddRows(row.id, e)}
+                        className="w-[200px] text-xs h-auto overscroll-contain"
+                      />
+                    </td>
+                    <td>
                       <input
-                        type="file"
-                        name="image"
-                        className="w-20"
-                        onChange={(e) => handleFileChange(e, index)}
+                        id="branch"
+                        name="branch"
+                        onChange={(e) => handleAddRows(row.id, e)}
+                        type="text"
+                        placeholder="สาขา"
+                        className="w-[100px]"
                       />
-                    </label>
-                  )}
-                  {row.image && row.image instanceof File && (
-                    <div className="flex justify-center items-center">
-                      <img
-                        src={URL.createObjectURL(row.image)}
-                        alt={`Selected ${row.id}`}
-                        width={150}
-                        className="p-1"
+                    </td>
+                    <td>
+                      <input
+                        id="price"
+                        name="price"
+                        value={formatInputValue(row.price)}
+                        onChange={(e) => handleAddRows(row.id, e)}
+                        type="text"
+                        placeholder="ราคา"
+                        className="w-[150px]"
                       />
-                    </div>
-                  )}
-                </td>
-                <td>
-                  <textarea
-                    id="detail"
-                    placeholder="ชื่อสินค้า"
-                    name="detail"
-                    value={row.detail}
-                    onChange={(e) => handleAddRows(row.id, e)}
-                    className="w-[200px] text-xs h-auto overscroll-contain"
-                  />
-                </td>
-                <td>
-                  <input
-                    id="branch"
-                    name="branch"
-                    onChange={(e) => handleAddRows(row.id, e)}
-                    type="text"
-                    placeholder="สาขา"
-                    className="w-[100px]"
-                  />
-                </td>
-                <td>
-                  <input
-                    id="price"
-                    name="price"
-                    value={formatInputValue(row.price)}
-                    onChange={(e) => handleAddRows(row.id, e)}
-                    type="text"
-                    placeholder="ราคา"
-                    className="w-[150px]"
-                  />
-                </td>
-                <td>
-                  <input
-                    id="qty"
-                    value={row.qty}
-                    onChange={(e) => handleAddRows(row.id, e)}
-                    type="number"
-                    placeholder="จํานวน"
-                    name="qty"
-                    className="w-12"
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        </div>
+                    </td>
+                    <td>
+                      <input
+                        id="qty"
+                        value={row.qty}
+                        onChange={(e) => handleAddRows(row.id, e)}
+                        type="number"
+                        placeholder="จํานวน"
+                        name="qty"
+                        className="w-12"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </MaxA4>
       <div>

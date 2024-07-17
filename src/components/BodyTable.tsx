@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { FormContent } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Textarea } from "./ui/textarea";
 const THBText = require("thai-baht-text");
 
 interface BodyTableProps {
@@ -35,19 +36,25 @@ export default function BodyTable({ props }: BodyTableProps) {
     }
     return "";
   };
-  const formatNumber = (number : number) => {
-    return new Intl.NumberFormat('en-US').format(number);
+  const formatNumber = (number: number) => {
+    return new Intl.NumberFormat("en-US").format(number);
   };
 
   //NOTE : edit table
   const unformatNumber = (number: string) => {
-    return parseFloat(number.replace(/,/g, ''));
+    return number ? parseFloat(number.replace(/,/g, "")) : 0;
   };
 
   const handleInputChange = (id: number, name: string, value: string) => {
     const updatedContentForm = contentForm.map((item) => {
       if (item.id === id) {
-        return { ...item, [name]: name === 'price' || name === 'discount' || name === 'amount' ? unformatNumber(value) : value };
+        return {
+          ...item,
+          [name]:
+            name === "price" || name === "discount" || name === "amount"
+              ? unformatNumber(value)
+              : value,
+        };
       }
       return item;
     });
@@ -55,15 +62,31 @@ export default function BodyTable({ props }: BodyTableProps) {
   };
 
   const formatInputValue = (value: number) => {
+    //convert string to number with comma
     return formatNumber(value);
   };
+  const handleTextareaChange = (id: number, name: string, value: string) => {
+    handleInputChange(id, name, value);
+    adjustTextareaHeight(id);
+  };
+
+  const adjustTextareaHeight = (id: number) => {
+    const textarea = document.getElementById(
+      `content-${id}`
+    ) as HTMLTextAreaElement;
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
+  React.useEffect(() => {
+    contentForm.forEach((item) => adjustTextareaHeight(item.id));
+  }, [contentForm]);
 
   if (props) {
     return (
       <>
         <Table>
-          {/* //NOTE - started the table here */}
-          {/* <TableCaption>This is a table caption</TableCaption> */}
           <TableHeader className="text-sm text-black bg-lime-500/60">
             <TableRow>
               <TableHead className="w-[30px]">ลำดับ</TableHead>
@@ -85,25 +108,96 @@ export default function BodyTable({ props }: BodyTableProps) {
             {contentForm.map((data, i) => (
               <TableRow key={i}>
                 <TableCell>{data.id + 1}</TableCell>
-                {data.article ? <TableCell>{data.article}</TableCell> : null}
+                {data.article ? (
+                  <TableCell>
+                    <input
+                      id="article"
+                      name="article"
+                      value={data.article}
+                      onChange={(e) =>
+                        handleInputChange(
+                          data.id,
+                          e.target.name,
+                          e.target.value
+                        )
+                      }
+                      type="text"
+                      placeholder="รหัสสินค้า"
+                      className="w-[70px]"
+                    />
+                  </TableCell>
+                ) : null}
                 <TableCell className="whitespace-pre-wrap">
-                  {data.content}
+                  <Textarea
+                    id={`content-${data.id}`}
+                    name="content"
+                    value={data.content}
+                    onChange={(e) =>
+                      handleInputChange(data.id, e.target.name, e.target.value)
+                    }
+                    placeholder="รายละเอียด"
+                    className="w-full border border-none"
+                    rows={1}
+                  />
                 </TableCell>
-                <TableCell>{data.qty}</TableCell>
-                <TableCell>{formatNumber(data.price)}</TableCell>
-                {/* <TableCell>
+                <TableCell>
+                  <input
+                    id="qty"
+                    name="qty"
+                    value={data.qty}
+                    onChange={(e) =>
+                      handleInputChange(data.id, e.target.name, e.target.value)
+                    }
+                    type="text"
+                    placeholder="จำนวน"
+                    className="w-[40px]"
+                  />
+                </TableCell>
+                <TableCell>
                   <input
                     id="price"
                     name="price"
                     value={formatInputValue(data.price)}
-                    onChange={(e) => handleInputChange(data.id, e.target.name, e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(data.id, e.target.name, e.target.value)
+                    }
                     type="text"
                     placeholder="ราคา"
+                    className="w-[100px]"
+                  />
+                </TableCell>
+                {data.discount ? (
+                  <TableCell>
+                    <input
+                      id="discount"
+                      name="discount"
+                      value={formatInputValue(data.discount)}
+                      onChange={(e) =>
+                        handleInputChange(
+                          data.id,
+                          e.target.name,
+                          e.target.value
+                        )
+                      }
+                      type="text"
+                      placeholder="ส่วนลด"
+                      className="w-[70px]"
+                    />
+                  </TableCell>
+                ) : null}
+                <TableCell>
+                  <input
+                    id="amount"
+                    name="amount"
+                    value={formatInputValue(data.amount)}
+                    onChange={(e) =>
+                      handleInputChange(data.id, e.target.name, e.target.value)
+                    }
+                    type="text"
+                    placeholder="ราคารวม"
                     className="w-[150px]"
                   />
-                  </TableCell> */}
-                {data.discount ? <TableCell>{formatNumber(data.discount)}</TableCell> : null}
-                <TableCell>{formatNumber(data.amount)}</TableCell>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
